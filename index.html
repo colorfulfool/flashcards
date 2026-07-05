@@ -24,9 +24,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            min-height: 100vh;
+            min-height: 100dvh;
             margin: 0;
-            padding: 20px;
+            padding: max(env(safe-area-inset-top), 20px) 20px max(env(safe-area-inset-bottom), 20px);
             box-sizing: border-box;
         }
         .container {
@@ -52,21 +52,12 @@
         .answer-bg {
           background-color: var(--answer-bg);
         }
-        .direction {
-            font-size: 0.85rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--accent);
-            margin-bottom: 15px;
-        }
         .prompt {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
             margin: 10px 0;
         }
         .target {
-            font-size: 2.2rem;
-            font-weight: 700;
+            font-size: 1.8rem;
         }
         .controls {
             margin-top: 30px;

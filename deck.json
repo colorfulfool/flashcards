@@ -1,0 +1,72 @@
+[
+  {
+    "type": "coercion",
+    "prompt": "書く (かく) → A-Row (Negative Base)",
+    "hint": "Shift terminal 'ku' to the A-row",
+    "target": "書か (かか)",
+    "explanation": "Godan shift: u → a row. (く → か). This forms the root for ない (negative), せる (causative), and れる (passive)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "話せ (はなせ)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "話す (はなす) [E-Row / Imperative]",
+    "explanation": "Terminal syllable shifted from 'su' to 'se' (u → e row). Without suffixes, this stands alone as the blunt imperative command."
+  },
+  {
+    "type": "coercion",
+    "prompt": "言う (いう) → A-Row (Negative Base)",
+    "hint": "Watch out for the structural Hiragana row anomaly for terminal 'u'",
+    "target": "言わ (いわ)",
+    "explanation": "Edge case rule: Verbs ending in a bare 'う' shift to 'わ' instead of 'あ' on the A-row to avoid an awkward double-vowel pronunciation."
+  },
+  {
+    "type": "recognition",
+    "prompt": "持てば (もてば)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "持つ (もつ) [E-Row → Conditional Suffix]",
+    "explanation": "Terminal 'tsu' shifted to the E-row 'te' (u → e) with the 'ba' conditional suffix appended. Meaning: 'If I hold'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "泳ぐ (およぐ) → O-Row (Volitional Base)",
+    "hint": "Shift terminal 'gu' to the O-row",
+    "target": "泳ご (およご)",
+    "explanation": "Godan shift: u → o row (ぐ → ご). In practice, you append 'う' to complete the volitional form: 泳ごう (Let's swim)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "死にます (しにます)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "死ぬ (しぬ) [I-Row → Polite Suffix]",
+    "explanation": "Terminal 'nu' shifted to the I-row 'ni' (u → i) to attach the polite auxiliary verb 'masu'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "呼ぶ (よぶ) → E-Row (Potential Base)",
+    "hint": "Shift terminal 'bu' to the E-row",
+    "target": "呼ば (よべ)",
+    "explanation": "Godan shift: u → e row (ぶ → べ). In standard modern Japanese, you append 'る' to form the complete potential verb: 呼べる (Can call)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "待とう (まとう)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "待つ (まつ) [O-Row → Volitional Suffix]",
+    "explanation": "Terminal 'tsu' shifted to the O-row 'to' (u → o) to merge with the long vowel marker 'u'. Meaning: 'Let's wait'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "切る (きる) → I-Row (Polite Base)",
+    "hint": "This is a Godan verb meaning 'to cut'. Shift the terminal 'ru'",
+    "target": "切り (きり)",
+    "explanation": "Godan shift: u → i row (る → り). Forms the stem for 'きります' (to cut politely) or acts as a compound noun generator."
+  },
+  {
+    "type": "recognition",
+    "prompt": "買わない (かわない)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "買う (かう) [A-Row → Negative Suffix]",
+    "explanation": "Reverses the classic bare-u edge case where 'u' maps to 'wa' (わ) on the A-row before appending 'nai'."
+  }
+]

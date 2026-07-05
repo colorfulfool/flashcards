@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godan Conjugation Matrix Drill</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --border: #334155;
+            --success: #4ade80;
+        }
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 100%;
+            max-width: 550px;
+            text-align: center;
+        }
+        .progress {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 40px 30px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .card:hover {
+            border-color: var(--accent);
+        }
+        .direction {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        .prompt {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        .hint {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+        }
+        .answer-container {
+            margin-top: 20px;
+            border-top: 1px dashed var(--border);
+            padding-top: 20px;
+        }
+        .target {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--success);
+        }
+        .explanation {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-top: 15px;
+            line-height: 1.5;
+        }
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        button {
+            background-color: var(--card-bg);
+            color: var(--text);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        button:hover {
+            background-color: var(--border);
+        }
+        .next-btn {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        .next-btn:hover {
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="progress">Card <span id="current-idx">1</span> of <span id="total-cards">0</span></div>
+    
+    <div class="card" id="flashcard">
+        <div class="direction" id="card-direction">Loading...</div>
+        <div class="prompt" id="card-prompt">---</div>
+        <div class="hint" id="card-hint">---</div>
+        
+        <div class="answer-container hidden" id="answer-block">
+            <div class="target" id="card-target">---</div>
+            <div class="explanation" id="card-explanation">---</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button id="action-btn">Show Answer</button>
+        <button id="next-btn" class="next-btn hidden">Next Card</button>
+    </div>
+</div>
+
+<script>
+// The raw deck data matching the system specs
+const deck = [
+  {
+    "type": "coercion",
+    "prompt": "書く (かく) → A-Row (Negative Base)",
+    "hint": "Shift terminal 'ku' to the A-row",
+    "target": "書か (かか)",
+    "explanation": "Godan shift: u → a row. (く → か). This forms the root for ない (negative), せる (causative), and れる (passive)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "話せ (はなせ)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "話す (はなす) [E-Row / Imperative]",
+    "explanation": "Terminal syllable shifted from 'su' to 'se' (u → e row). Without suffixes, this stands alone as the blunt imperative command."
+  },
+  {
+    "type": "coercion",
+    "prompt": "言う (いう) → A-Row (Negative Base)",
+    "hint": "Watch out for the structural Hiragana row anomaly for terminal 'u'",
+    "target": "言わ (いわ)",
+    "explanation": "Edge case rule: Verbs ending in a bare 'う' shift to 'わ' instead of 'あ' on the A-row to avoid an awkward double-vowel pronunciation."
+  },
+  {
+    "type": "recognition",
+    "prompt": "持てば (もてば)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "持つ (もつ) [E-Row → Conditional Suffix]",
+    "explanation": "Terminal 'tsu' shifted to the E-row 'te' (u → e) with the 'ba' conditional suffix appended. Meaning: 'If I hold'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "泳ぐ (およぐ) → O-Row (Volitional Base)",
+    "hint": "Shift terminal 'gu' to the O-row",
+    "target": "泳ご (およご)",
+    "explanation": "Godan shift: u → o row (ぐ → ご). In practice, you append 'う' to complete the volitional form: 泳ごう (Let's swim)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "死にます (しにます)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "死ぬ (しぬ) [I-Row → Polite Suffix]",
+    "explanation": "Terminal 'nu' shifted to the I-row 'ni' (u → i) to attach the polite auxiliary verb 'masu'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "呼ぶ (よぶ) → E-Row (Potential Base)",
+    "hint": "Shift terminal 'bu' to the E-row",
+    "target": "呼ば (よべ)",
+    "explanation": "Godan shift: u → e row (ぶ → べ). In standard modern Japanese, you append 'る' to form the complete potential verb: 呼べる (Can call)."
+  },
+  {
+    "type": "recognition",
+    "prompt": "待とう (まとう)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "待つ (まつ) [O-Row → Volitional Suffix]",
+    "explanation": "Terminal 'tsu' shifted to the O-row 'to' (u → o) to merge with the long vowel marker 'u'. Meaning: 'Let's wait'."
+  },
+  {
+    "type": "coercion",
+    "prompt": "切る (きる) → I-Row (Polite Base)",
+    "hint": "This is a Godan verb meaning 'to cut'. Shift the terminal 'ru'",
+    "target": "切り (きり)",
+    "explanation": "Godan shift: u → i row (る → り). Forms the stem for 'きります' (to cut politely) or acts as a compound noun generator."
+  },
+  {
+    "type": "recognition",
+    "prompt": "買わない (かわない)",
+    "hint": "Identify the base form and vowel row transformation",
+    "target": "買う (かう) [A-Row → Negative Suffix]",
+    "explanation": "Reverses the classic bare-u edge case where 'u' maps to 'wa' (わ) on the A-row before appending 'nai'."
+  }
+];
+
+let currentIdx = 0;
+let showingAnswer = false;
+
+const cardEl = document.getElementById('flashcard');
+const directionEl = document.getElementById('card-direction');
+const promptEl = document.getElementById('card-prompt');
+const hintEl = document.getElementById('card-hint');
+const answerBlockEl = document.getElementById('answer-block');
+const targetEl = document.getElementById('card-target');
+const explanationEl = document.getElementById('card-explanation');
+const actionBtn = document.getElementById('action-btn');
+const nextBtn = document.getElementById('next-btn');
+
+document.getElementById('total-cards').textContent = deck.length;
+
+function renderCard() {
+    const item = deck[currentIdx];
+    document.getElementById('current-idx').textContent = currentIdx + 1;
+    
+    directionEl.textContent = item.type === 'coercion' ? 'Apply Transformation' : 'Identify Component State';
+    promptEl.textContent = item.prompt;
+    hintEl.textContent = item.hint;
+    targetEl.textContent = item.target;
+    explanationEl.textContent = item.explanation;
+    
+    answerBlockEl.classList.add('hidden');
+    nextBtn.classList.add('hidden');
+    actionBtn.classList.remove('hidden');
+    showingAnswer = false;
+}
+
+function showAnswer() {
+    answerBlockEl.classList.remove('hidden');
+    actionBtn.classList.add('hidden');
+    nextBtn.classList.remove('hidden');
+    showingAnswer = true;
+}
+
+function nextCard() {
+    currentIdx = (currentIdx + 1) % deck.length;
+    renderCard();
+}
+
+cardEl.addEventListener('click', () => {
+    if (!showingAnswer) showAnswer();
+});
+actionBtn.addEventListener('click', showAnswer);
+nextBtn.addEventListener('click', nextCard);
+
+// Handle spaces and arrows for swift execution
+document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+        e.preventDefault();
+        if (!showingAnswer) showAnswer();
+        else nextCard();
+    } else if (e.code === 'ArrowRight' && showingAnswer) {
+        nextCard();
+    }
+});
+
+// Init
+renderCard();
+</script>
+</body>
+</html>

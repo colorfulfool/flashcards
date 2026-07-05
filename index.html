@@ -158,7 +158,7 @@ function showAnswer() {
 }
 
 function nextCard() {
-    currentIdx = (currentIdx + 1) % deck.length;
+    currentIdx = Math.round(Math.random() * deck.length) - 1;
     renderCard();
 }
 
@@ -199,8 +199,9 @@ fetch("/deck.json")
   .then(resp => resp.json())
   .then(data => { 
     deck = data; 
+
     document.getElementById('total-cards').textContent = deck.length;
-    renderCard();
+    nextCard();
   });
 </script>
 </body>

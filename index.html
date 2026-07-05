@@ -34,11 +34,23 @@
             max-width: 550px;
             text-align: center;
         }
-        .progress {
+        .top-bar {
             font-size: 0.9rem;
-            color: var(--text-muted);
             margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
         }
+        .progress {
+            color: var(--text-muted);
+        }
+        .correct {
+          background-color: color-mix(in oklab, var(--success), var(--bg) 40%);
+          padding: 4px 8px;
+          border-radius: 12px;
+        }
+        .correct svg { margin-right: 3px; }
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -83,7 +95,17 @@
 </head>
 <body>
 
-<div class="progress"><span id="current-idx">1</span> / <span id="total-cards">0</span></div>
+<div class="top-bar">
+  <div class="progress">
+    <span id="current-idx">1</span> / <span id="total-cards">0</span>
+  </div>
+  <div class="correct hidden">
+    <svg width="10" height="10" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+      <path d="M 0 5 L 4 10 L 10 0" stroke="currentColor" stroke-width="2" fill="none" />
+    </svg>
+    <span id="correct-count">0</span>
+  </div>
+</div>
 
 <div class="container">
     
@@ -120,13 +142,16 @@ let deck;
 let currentIdx = 0;
 let showingAnswer = false;
 let trackingLearning = false;
+let correctCount = 0;
 
 const cardEl = document.getElementById('flashcard');
 const promptEl = document.getElementById('card-prompt');
 const answerBlockEl = document.getElementById('answer-block');
 const targetEl = document.getElementById('card-target');
 const controlsEl = document.getElementById('controls');
-const checkboxEl = document.querySelector('input[name=track-learning]');
+const trackLearningCheck = document.querySelector('input[name=track-learning]');
+const rightBtn = document.getElementById('right-btn');
+const wrongBtn = document.getElementById('wrong-btn');
 
 function renderCard() {
     const item = deck[currentIdx];
@@ -149,6 +174,8 @@ function showAnswer() {
 }
 
 function nextCard() {
+    document.getElementById('total-cards').textContent = deck.length;
+    document.getElementById('correct-count').textContent = correctCount;
     currentIdx = Math.round(Math.random() * deck.length) - 1;
     renderCard();
 }
@@ -161,12 +188,22 @@ cardEl.addEventListener('click', () => {
   } 
 });
 
-checkboxEl.addEventListener('change', (event) => {
+trackLearningCheck.addEventListener('change', (event) => {
   if (event.target.checked) {
     controlsEl.classList.remove('hidden'); 
+    document.querySelector(".correct").classList.remove('hidden'); 
   } else {
     controlsEl.classList.add('hidden'); 
+    document.querySelector(".correct").classList.add('hidden'); 
   }
+});
+
+wrongBtn.addEventListener('click', nextCard);
+
+rightBtn.addEventListener('click', () => {
+  deck.splice(currentIdx, 1);
+  correctCount++;
+  nextCard();
 });
 
 // Handle spaces and arrows for swift execution
@@ -191,7 +228,6 @@ fetch("/deck.json")
   .then(data => { 
     deck = data; 
 
-    document.getElementById('total-cards').textContent = deck.length;
     nextCard();
   });
 </script>

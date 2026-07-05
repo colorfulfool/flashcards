@@ -6,13 +6,15 @@
     <title>Godan Conjugation Matrix Drill</title>
     <style>
         :root {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #131314;
+            --card-bg: #1e1f20;
             --text: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #626262;
             --accent: #38bdf8;
             --border: #334155;
-            --success: #4ade80;
+            --success: #377e22;
+            --failure: #ea3323;
+            --answer-bg: #1d4974;
         }
         body {
             font-family: system-ui, -apple-system, sans-serif;
@@ -21,10 +23,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
         }
         .container {
             width: 100%;
@@ -38,7 +41,6 @@
         }
         .card {
             background-color: var(--card-bg);
-            border: 1px solid var(--border);
             border-radius: 12px;
             padding: 40px 30px;
             min-height: 220px;
@@ -46,11 +48,9 @@
             flex-direction: column;
             justify-content: center;
             cursor: pointer;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.3);
-            transition: transform 0.2s, border-color 0.2s;
         }
-        .card:hover {
-            border-color: var(--accent);
+        .answer-bg {
+          background-color: var(--answer-bg);
         }
         .direction {
             font-size: 0.85rem;
@@ -64,76 +64,63 @@
             font-weight: 700;
             margin: 10px 0;
         }
-        .hint {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-top: 10px;
-        }
-        .answer-container {
-            margin-top: 20px;
-            border-top: 1px dashed var(--border);
-            padding-top: 20px;
-        }
         .target {
             font-size: 2.2rem;
             font-weight: 700;
-            color: var(--success);
-        }
-        .explanation {
-            font-size: 0.95rem;
-            color: var(--text-muted);
-            margin-top: 15px;
-            line-height: 1.5;
         }
         .controls {
             margin-top: 30px;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
         }
         button {
             background-color: var(--card-bg);
             color: var(--text);
-            border: 1px solid var(--border);
-            padding: 12px 24px;
-            border-radius: 8px;
+            border: transparent;
+            padding: 12px;
+            border-radius: 128px;
             cursor: pointer;
             font-weight: 600;
             transition: all 0.2s;
         }
-        button:hover {
-            background-color: var(--border);
-        }
-        .next-btn {
-            border-color: var(--accent);
-            color: var(--accent);
-        }
-        .next-btn:hover {
-            background-color: rgba(56, 189, 248, 0.1);
-        }
+        button:active { opacity: 0.6; }
+        #wrong-btn svg { stroke: var(--failure); }
+        #right-btn svg { stroke: var(--success); }
         .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
+<div class="progress"><span id="current-idx">1</span> / <span id="total-cards">0</span></div>
+
 <div class="container">
-    <div class="progress">Card <span id="current-idx">1</span> of <span id="total-cards">0</span></div>
     
     <div class="card" id="flashcard">
-        <div class="direction" id="card-direction">Loading...</div>
         <div class="prompt" id="card-prompt">---</div>
-        <div class="hint" id="card-hint">---</div>
         
-        <div class="answer-container hidden" id="answer-block">
+        <div class="hidden" id="answer-block">
             <div class="target" id="card-target">---</div>
-            <div class="explanation" id="card-explanation">---</div>
         </div>
     </div>
 
-    <div class="controls">
-        <button id="action-btn">Show Answer</button>
-        <button id="next-btn" class="next-btn hidden">Next Card</button>
+    <div class="controls hidden" id="controls">
+      <button id="wrong-btn">
+        <svg width="12" height="12" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+          <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" />
+          <line x1="10" y1="0" x2="0" y2="10" stroke-width="2" />
+        </svg>
+      </button>
+      <button id="right-btn">
+        <svg width="12" height="12" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+          <path d="M 0 5 L 4 10 L 10 0" stroke-width="2" fill="none" />
+        </svg>
+      </button>
     </div>
+</div>
+
+<div>
+  <label><input type="checkbox" name="track-learning" /> Track learning</label>
 </div>
 
 <script>
@@ -141,88 +128,66 @@
 const deck = [
   {
     "type": "coercion",
-    "prompt": "書く (かく) → A-Row (Negative Base)",
-    "hint": "Shift terminal 'ku' to the A-row",
+    "prompt": "書く (かく) → Negative Base",
     "target": "書か (かか)",
-    "explanation": "Godan shift: u → a row. (く → か). This forms the root for ない (negative), せる (causative), and れる (passive)."
   },
   {
     "type": "recognition",
     "prompt": "話せ (はなせ)",
-    "hint": "Identify the base form and vowel row transformation",
     "target": "話す (はなす) [E-Row / Imperative]",
-    "explanation": "Terminal syllable shifted from 'su' to 'se' (u → e row). Without suffixes, this stands alone as the blunt imperative command."
   },
   {
     "type": "coercion",
-    "prompt": "言う (いう) → A-Row (Negative Base)",
-    "hint": "Watch out for the structural Hiragana row anomaly for terminal 'u'",
+    "prompt": "言う (いう) → Negative Base",
     "target": "言わ (いわ)",
-    "explanation": "Edge case rule: Verbs ending in a bare 'う' shift to 'わ' instead of 'あ' on the A-row to avoid an awkward double-vowel pronunciation."
   },
   {
     "type": "recognition",
     "prompt": "持てば (もてば)",
-    "hint": "Identify the base form and vowel row transformation",
     "target": "持つ (もつ) [E-Row → Conditional Suffix]",
-    "explanation": "Terminal 'tsu' shifted to the E-row 'te' (u → e) with the 'ba' conditional suffix appended. Meaning: 'If I hold'."
   },
   {
     "type": "coercion",
-    "prompt": "泳ぐ (およぐ) → O-Row (Volitional Base)",
-    "hint": "Shift terminal 'gu' to the O-row",
+    "prompt": "泳ぐ (およぐ) → Volitional Base",
     "target": "泳ご (およご)",
-    "explanation": "Godan shift: u → o row (ぐ → ご). In practice, you append 'う' to complete the volitional form: 泳ごう (Let's swim)."
   },
   {
     "type": "recognition",
     "prompt": "死にます (しにます)",
-    "hint": "Identify the base form and vowel row transformation",
     "target": "死ぬ (しぬ) [I-Row → Polite Suffix]",
-    "explanation": "Terminal 'nu' shifted to the I-row 'ni' (u → i) to attach the polite auxiliary verb 'masu'."
   },
   {
     "type": "coercion",
-    "prompt": "呼ぶ (よぶ) → E-Row (Potential Base)",
-    "hint": "Shift terminal 'bu' to the E-row",
+    "prompt": "呼ぶ (よぶ) → Potential Base",
     "target": "呼ば (よべ)",
-    "explanation": "Godan shift: u → e row (ぶ → べ). In standard modern Japanese, you append 'る' to form the complete potential verb: 呼べる (Can call)."
   },
   {
     "type": "recognition",
     "prompt": "待とう (まとう)",
-    "hint": "Identify the base form and vowel row transformation",
     "target": "待つ (まつ) [O-Row → Volitional Suffix]",
-    "explanation": "Terminal 'tsu' shifted to the O-row 'to' (u → o) to merge with the long vowel marker 'u'. Meaning: 'Let's wait'."
   },
   {
     "type": "coercion",
-    "prompt": "切る (きる) → I-Row (Polite Base)",
-    "hint": "This is a Godan verb meaning 'to cut'. Shift the terminal 'ru'",
+    "prompt": "切る (きる) → Polite Base",
     "target": "切り (きり)",
-    "explanation": "Godan shift: u → i row (る → り). Forms the stem for 'きります' (to cut politely) or acts as a compound noun generator."
   },
   {
     "type": "recognition",
     "prompt": "買わない (かわない)",
-    "hint": "Identify the base form and vowel row transformation",
     "target": "買う (かう) [A-Row → Negative Suffix]",
-    "explanation": "Reverses the classic bare-u edge case where 'u' maps to 'wa' (わ) on the A-row before appending 'nai'."
   }
 ];
 
 let currentIdx = 0;
 let showingAnswer = false;
+let trackingLearning = false;
 
 const cardEl = document.getElementById('flashcard');
-const directionEl = document.getElementById('card-direction');
 const promptEl = document.getElementById('card-prompt');
-const hintEl = document.getElementById('card-hint');
 const answerBlockEl = document.getElementById('answer-block');
 const targetEl = document.getElementById('card-target');
-const explanationEl = document.getElementById('card-explanation');
-const actionBtn = document.getElementById('action-btn');
-const nextBtn = document.getElementById('next-btn');
+const controlsEl = document.getElementById('controls');
+const checkboxEl = document.querySelector('input[name=track-learning]');
 
 document.getElementById('total-cards').textContent = deck.length;
 
@@ -230,22 +195,19 @@ function renderCard() {
     const item = deck[currentIdx];
     document.getElementById('current-idx').textContent = currentIdx + 1;
     
-    directionEl.textContent = item.type === 'coercion' ? 'Apply Transformation' : 'Identify Component State';
     promptEl.textContent = item.prompt;
-    hintEl.textContent = item.hint;
     targetEl.textContent = item.target;
-    explanationEl.textContent = item.explanation;
     
+    promptEl.classList.remove('hidden');
     answerBlockEl.classList.add('hidden');
-    nextBtn.classList.add('hidden');
-    actionBtn.classList.remove('hidden');
+    cardEl.classList.remove('answer-bg');
     showingAnswer = false;
 }
 
 function showAnswer() {
+    promptEl.classList.add('hidden');
     answerBlockEl.classList.remove('hidden');
-    actionBtn.classList.add('hidden');
-    nextBtn.classList.remove('hidden');
+    cardEl.classList.add('answer-bg');
     showingAnswer = true;
 }
 
@@ -255,10 +217,20 @@ function nextCard() {
 }
 
 cardEl.addEventListener('click', () => {
-    if (!showingAnswer) showAnswer();
+  if (showingAnswer) {
+    nextCard();
+  } else {
+    showAnswer();
+  } 
 });
-actionBtn.addEventListener('click', showAnswer);
-nextBtn.addEventListener('click', nextCard);
+
+checkboxEl.addEventListener('change', (event) => {
+  if (event.target.checked) {
+    controlsEl.classList.remove('hidden'); 
+  } else {
+    controlsEl.classList.add('hidden'); 
+  }
+});
 
 // Handle spaces and arrows for swift execution
 document.addEventListener('keydown', (e) => {

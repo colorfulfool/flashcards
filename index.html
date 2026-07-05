@@ -124,59 +124,7 @@
 </div>
 
 <script>
-// The raw deck data matching the system specs
-const deck = [
-  {
-    "type": "coercion",
-    "prompt": "書く (かく) → Negative Base",
-    "target": "書か (かか)",
-  },
-  {
-    "type": "recognition",
-    "prompt": "話せ (はなせ)",
-    "target": "話す (はなす) [E-Row / Imperative]",
-  },
-  {
-    "type": "coercion",
-    "prompt": "言う (いう) → Negative Base",
-    "target": "言わ (いわ)",
-  },
-  {
-    "type": "recognition",
-    "prompt": "持てば (もてば)",
-    "target": "持つ (もつ) [E-Row → Conditional Suffix]",
-  },
-  {
-    "type": "coercion",
-    "prompt": "泳ぐ (およぐ) → Volitional Base",
-    "target": "泳ご (およご)",
-  },
-  {
-    "type": "recognition",
-    "prompt": "死にます (しにます)",
-    "target": "死ぬ (しぬ) [I-Row → Polite Suffix]",
-  },
-  {
-    "type": "coercion",
-    "prompt": "呼ぶ (よぶ) → Potential Base",
-    "target": "呼ば (よべ)",
-  },
-  {
-    "type": "recognition",
-    "prompt": "待とう (まとう)",
-    "target": "待つ (まつ) [O-Row → Volitional Suffix]",
-  },
-  {
-    "type": "coercion",
-    "prompt": "切る (きる) → Polite Base",
-    "target": "切り (きり)",
-  },
-  {
-    "type": "recognition",
-    "prompt": "買わない (かわない)",
-    "target": "買う (かう) [A-Row → Negative Suffix]",
-  }
-];
+let deck;
 
 let currentIdx = 0;
 let showingAnswer = false;
@@ -188,8 +136,6 @@ const answerBlockEl = document.getElementById('answer-block');
 const targetEl = document.getElementById('card-target');
 const controlsEl = document.getElementById('controls');
 const checkboxEl = document.querySelector('input[name=track-learning]');
-
-document.getElementById('total-cards').textContent = deck.length;
 
 function renderCard() {
     const item = deck[currentIdx];
@@ -243,8 +189,19 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Init
-renderCard();
+// Stages of learning:
+// [ ] row-based godan verbs
+// [ ] add ichidan verbs
+// [ ] add non-row-based forms
+// [ ] add compound forms (like passive-causative)
+
+fetch("/deck.json")
+  .then(resp => resp.json())
+  .then(data => { 
+    deck = data; 
+    document.getElementById('total-cards').textContent = deck.length;
+    renderCard();
+  });
 </script>
 </body>
 </html>

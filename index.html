@@ -202,7 +202,11 @@ function nextCard() {
 
 cardEl.addEventListener('click', () => {
   if (showingAnswer) {
-    hideAnswer();
+    if (trackingLearning) {
+      hideAnswer();
+    } else {
+      nextCard();
+    }
   } else {
     showAnswer();
   } 

@@ -98,18 +98,42 @@
             padding: 16px;
             border-radius: 128px;
             cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
         }
         button:active { opacity: 0.6; }
         #wrong-btn { background-color: var(--failure-bg); stroke: var(--failure); }
         #right-btn { background-color: var(--success-bg); stroke: var(--success); }
         .track-learning { display: flex; gap: 4px; }
         .hidden { display: none !important; }
+        .decks-select-container {
+          display: flex;
+          gap: 10px;
+        }
+        #decks-btn {
+            font-size: 0.9rem;
+            padding: 4px 12px;
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
         #type-filter {
             font-size: 0.9rem;
             padding: 4px 8px;
             font-weight: 600;
+        }
+        #decks-modal {
+          background-color: var(--card-bg);
+          color: var(--text);
+          border: transparent;
+          border-radius: 8px;
+          padding: 24px 28px;
+        }
+        #decks-modal > div {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        #decks-modal::backdrop {
+          background-color: #00000090;
         }
     </style>
 </head>
@@ -119,7 +143,15 @@
   <div class="progress">
     <span id="current-idx">1</span> / <span id="total-cards">0</span>
   </div>
-  <button id="type-filter">B</button>
+  <div class="decks-select-container">
+    <button id="decks-btn" commandfor="decks-modal" command="show-modal">
+      <div>Decks</div>
+      <svg viewBox="0 0 10 10" width="10" height="10">
+        <path d="M 1 3 L 5 7 L 9 3" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+      </svg>
+    </button>
+    <button id="type-filter">B</button>
+  </div>
   <div class="correct hidden">
     <svg width="8" height="8" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
       <path d="M 0 5 L 4 10 L 10 0" stroke="currentColor" stroke-width="1" fill="none" />
@@ -127,6 +159,14 @@
     <span id="correct-count">0</span>
   </div>
 </div>
+
+<dialog popover id="decks-modal">
+  <div>
+    <label class="track-learning">
+      <input type="checkbox" /> row-based godan verbs
+    </label>
+  </div>
+</dialog>
 
 <div class="container">
     
@@ -178,6 +218,7 @@ const trackLearningCheck = document.querySelector('input[name=track-learning]');
 const rightBtn = document.getElementById('right-btn');
 const wrongBtn = document.getElementById('wrong-btn');
 const typeFilterBtn = document.getElementById('type-filter');
+const decksBtn = document.getElementById('decks-btn');
 
 function renderCard(item) {
     currentCard = item;
@@ -256,6 +297,10 @@ typeFilterBtn.addEventListener('click', () => {
 rightBtn.addEventListener('click', () => {
   answeredDeck.push(currentCard);
   nextCard();
+});
+
+decksBtn.addEventListener('click', () => {
+  document.getElementById('decks-modal').showPopover();
 });
 
 // Handle spaces and arrows for swift execution

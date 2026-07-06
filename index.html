@@ -153,11 +153,12 @@
 
 <script>
 let deck;
+let answeredDeck = [];
 
 let currentIdx = 0;
+let currentCard = null;
 let showingAnswer = false;
 let trackingLearning = false;
-let correctCount = 0;
 
 const cardEl = document.getElementById('flashcard');
 const promptEl = document.getElementById('card-prompt');
@@ -168,8 +169,8 @@ const trackLearningCheck = document.querySelector('input[name=track-learning]');
 const rightBtn = document.getElementById('right-btn');
 const wrongBtn = document.getElementById('wrong-btn');
 
-function renderCard() {
-    const item = deck[currentIdx];
+function renderCard(item) {
+    currentCard = item;
     document.getElementById('current-idx').textContent = currentIdx + 1;
     
     promptEl.textContent = item.prompt;
@@ -196,18 +197,19 @@ function hideAnswer() {
 }
 
 function nextCard() {
-    document.getElementById('total-cards').textContent = deck.length;
-    document.getElementById('correct-count').textContent = correctCount;
+    const selected = deck.filter(card => !answeredDeck.includes(card));
+    document.getElementById('total-cards').textContent = selected.length;
+    document.getElementById('correct-count').textContent = answeredDeck.length;
 
-    if (deck.length === 0) {
+    if (selected.length === 0) {
       cardEl.classList.remove('question-bg');
       cardEl.classList.remove('answer-bg');
       promptEl.textContent = 'All done';
       return;
     }
 
-    currentIdx = Math.round(Math.random() * deck.length) - 1;
-    renderCard();
+    currentIdx = Math.round(Math.random() * selected.length) - 1;
+    renderCard(selected[currentIdx]);
 }
 
 cardEl.addEventListener('click', () => {
@@ -235,8 +237,7 @@ trackLearningCheck.addEventListener('change', (event) => {
 wrongBtn.addEventListener('click', nextCard);
 
 rightBtn.addEventListener('click', () => {
-  deck.splice(currentIdx, 1);
-  correctCount++;
+  answeredDeck.push(currentCard);
   nextCard();
 });
 

@@ -55,7 +55,6 @@
         }
         svg { display: block; }
         .card {
-            background-color: var(--card-bg);
             border-radius: 12px;
             padding: 40px 30px;
             min-height: 220px;
@@ -63,6 +62,9 @@
             flex-direction: column;
             justify-content: center;
             cursor: pointer;
+        }
+        .question-bg {
+          background-color: var(--card-bg);
         }
         .answer-bg {
           background-color: var(--answer-bg);
@@ -78,13 +80,13 @@
             margin-top: 30px;
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 16px;
         }
         button {
             background-color: var(--card-bg);
             color: var(--text);
             border: transparent;
-            padding: 14px;
+            padding: 16px;
             border-radius: 128px;
             cursor: pointer;
             font-weight: 600;
@@ -112,7 +114,7 @@
 
 <div class="container">
     
-    <div class="card" id="flashcard">
+    <div class="card question-bg" id="flashcard">
         <div class="prompt" id="card-prompt">---</div>
         
         <div class="hidden" id="answer-block">
@@ -188,7 +190,9 @@ function nextCard() {
     document.getElementById('correct-count').textContent = correctCount;
 
     if (deck.length === 0) {
-      window.alert("All done!");
+      cardEl.classList.remove('question-bg');
+      cardEl.classList.remove('answer-bg');
+      promptEl.textContent = 'All done';
       return;
     }
 
@@ -239,7 +243,7 @@ document.addEventListener('keydown', (e) => {
 // [ ] add non-row-based forms (past, negative, past negative)
 // [ ] add compound forms (causative-passive, tara conditional, desire)
 
-fetch("/deck.json")
+fetch("deck.json")
   .then(resp => resp.json())
   .then(data => { 
     deck = data; 

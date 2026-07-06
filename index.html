@@ -257,10 +257,10 @@ document.addEventListener('keydown', (e) => {
 // [ ] add non-row-based forms (past, negative, past negative)
 // [ ] add compound forms (causative-passive, tara conditional, desire)
 
-fetch("deck.json")
+fetch("decks.json")
   .then(resp => resp.json())
   .then(data => { 
-    deck = data; 
+    deck = data.flatMap(deck => deck.cards); 
     nextCard();
   });
 </script>

@@ -104,6 +104,11 @@
         #right-btn { background-color: var(--success-bg); stroke: var(--success); }
         .track-learning { display: flex; gap: 4px; }
         .hidden { display: none !important; }
+        #type-filter {
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -112,6 +117,7 @@
   <div class="progress">
     <span id="current-idx">1</span> / <span id="total-cards">0</span>
   </div>
+  <button id="type-filter">B</button>
   <div class="correct hidden">
     <svg width="8" height="8" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
       <path d="M 0 5 L 4 10 L 10 0" stroke="currentColor" stroke-width="1" fill="none" />
@@ -154,6 +160,7 @@
 <script>
 let deck;
 let answeredDeck = [];
+let typeFilter = 'both';
 
 let currentIdx = 0;
 let currentCard = null;
@@ -168,6 +175,7 @@ const controlsEl = document.getElementById('controls');
 const trackLearningCheck = document.querySelector('input[name=track-learning]');
 const rightBtn = document.getElementById('right-btn');
 const wrongBtn = document.getElementById('wrong-btn');
+const typeFilterBtn = document.getElementById('type-filter');
 
 function renderCard(item) {
     currentCard = item;
@@ -197,7 +205,7 @@ function hideAnswer() {
 }
 
 function nextCard() {
-    const selected = deck.filter(card => !answeredDeck.includes(card));
+    const selected = deck.filter(card => !answeredDeck.includes(card) && (typeFilter === 'both' || card.type === typeFilter));
     document.getElementById('total-cards').textContent = selected.length;
     document.getElementById('correct-count').textContent = answeredDeck.length;
 
@@ -235,6 +243,12 @@ trackLearningCheck.addEventListener('change', (event) => {
 });
 
 wrongBtn.addEventListener('click', nextCard);
+
+typeFilterBtn.addEventListener('click', () => {
+  typeFilter = typeFilter === 'both' ? 'coercion' : typeFilter === 'coercion' ? 'recognition' : 'both';
+  typeFilterBtn.textContent = { both: 'B', coercion: 'C', recognition: 'R' }[typeFilter];
+  nextCard();
+});
 
 rightBtn.addEventListener('click', () => {
   answeredDeck.push(currentCard);

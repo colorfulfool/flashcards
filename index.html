@@ -49,8 +49,11 @@
           background-color: color-mix(in oklab, var(--success), var(--bg) 40%);
           padding: 4px 8px;
           border-radius: 12px;
+          display: flex;
+          gap: 6px; 
+          align-items: center;
         }
-        .correct svg { margin-right: 3px; }
+        svg { display: block; }
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -81,7 +84,7 @@
             background-color: var(--card-bg);
             color: var(--text);
             border: transparent;
-            padding: 12px;
+            padding: 14px;
             border-radius: 128px;
             cursor: pointer;
             font-weight: 600;
@@ -100,8 +103,8 @@
     <span id="current-idx">1</span> / <span id="total-cards">0</span>
   </div>
   <div class="correct hidden">
-    <svg width="10" height="10" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
-      <path d="M 0 5 L 4 10 L 10 0" stroke="currentColor" stroke-width="2" fill="none" />
+    <svg width="8" height="8" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+      <path d="M 0 5 L 4 10 L 10 0" stroke="currentColor" stroke-width="1" fill="none" />
     </svg>
     <span id="correct-count">0</span>
   </div>
@@ -119,14 +122,14 @@
 
     <div class="controls hidden" id="controls">
       <button id="wrong-btn">
-        <svg width="12" height="12" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
-          <line x1="0" y1="0" x2="10" y2="10" stroke-width="2" />
-          <line x1="10" y1="0" x2="0" y2="10" stroke-width="2" />
+        <svg width="14" height="14" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+          <line x1="0" y1="0" x2="10" y2="10" stroke-width="1.5" />
+          <line x1="10" y1="0" x2="0" y2="10" stroke-width="1.5" />
         </svg>
       </button>
       <button id="right-btn">
-        <svg width="12" height="12" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
-          <path d="M 0 5 L 4 10 L 10 0" stroke-width="2" fill="none" />
+        <svg width="14" height="14" viewBox="0 0 10 10" preserveAspectRatio="xMidYMid slice">
+          <path d="M 0 5 L 4 10 L 10 0" stroke-width="1.5" fill="none" />
         </svg>
       </button>
     </div>
@@ -173,6 +176,13 @@ function showAnswer() {
     showingAnswer = true;
 }
 
+function hideAnswer() {
+    promptEl.classList.remove('hidden');
+    answerBlockEl.classList.add('hidden');
+    cardEl.classList.remove('answer-bg');
+    showingAnswer = false;
+}
+
 function nextCard() {
     document.getElementById('total-cards').textContent = deck.length;
     document.getElementById('correct-count').textContent = correctCount;
@@ -182,7 +192,7 @@ function nextCard() {
 
 cardEl.addEventListener('click', () => {
   if (showingAnswer) {
-    nextCard();
+    hideAnswer();
   } else {
     showAnswer();
   } 

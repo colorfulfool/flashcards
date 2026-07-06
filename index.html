@@ -161,11 +161,7 @@
 </div>
 
 <dialog popover id="decks-modal">
-  <div>
-    <label class="track-learning">
-      <input type="checkbox" /> row-based godan verbs
-    </label>
-  </div>
+  <div></div>
 </dialog>
 
 <div class="container">
@@ -201,6 +197,7 @@
 
 <script>
 let deck;
+let allDecks = [];
 let answeredDeck = [];
 let typeFilter = 'both';
 
@@ -248,7 +245,8 @@ function hideAnswer() {
 }
 
 function nextCard() {
-    const selected = deck.filter(card => !answeredDeck.includes(card) && (typeFilter === 'both' || card.type === typeFilter));
+    const checked = new Set([...document.querySelectorAll('#decks-modal input[type=checkbox]:checked')].map(cb => cb.parentElement.textContent.trim()));
+    const selected = deck.filter(card => !answeredDeck.includes(card) && checked.has(card.deck) && (typeFilter === 'both' || card.type === typeFilter));
     document.getElementById('total-cards').textContent = selected.length;
     document.getElementById('correct-count').textContent = answeredDeck.length;
 
@@ -323,9 +321,31 @@ document.addEventListener('keydown', (e) => {
 fetch("decks.json")
   .then(resp => resp.json())
   .then(data => { 
-    deck = data.flatMap(deck => deck.cards); 
+    allDecks = data;
+    deck = data.flatMap(d => d.cards.map(card => ({ ...card, deck: d.name })));
+    populateDecksModal();
     nextCard();
   });
+
+function populateDecksModal() {
+  const modal = document.getElementById('decks-modal');
+  const container = modal.querySelector('div');
+  container.innerHTML = '';
+  allDecks.forEach(d => {
+    const label = document.createElement('label');
+    label.className = 'track-learning';
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = true;
+    checkbox.addEventListener('change', () => {
+      answeredDeck.length = 0;
+      nextCard();
+    });
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(d.name));
+    container.appendChild(label);
+  });
+}
 </script>
 </body>
 </html>

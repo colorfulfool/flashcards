@@ -106,7 +106,7 @@
         .hidden { display: none !important; }
         .decks-select-container {
           display: flex;
-          gap: 10px;
+          gap: 8px;
         }
         #decks-btn {
             font-size: 0.9rem;
@@ -276,9 +276,11 @@ cardEl.addEventListener('click', () => {
 
 trackLearningCheck.addEventListener('change', (event) => {
   if (event.target.checked) {
+    trackingLearning = true;
     controlsEl.classList.remove('hidden'); 
     document.querySelector(".correct").classList.remove('hidden'); 
   } else {
+    trackingLearning = false;
     controlsEl.classList.add('hidden'); 
     document.querySelector(".correct").classList.add('hidden'); 
   }

@@ -186,6 +186,12 @@ function hideAnswer() {
 function nextCard() {
     document.getElementById('total-cards').textContent = deck.length;
     document.getElementById('correct-count').textContent = correctCount;
+
+    if (deck.length === 0) {
+      window.alert("All done!");
+      return;
+    }
+
     currentIdx = Math.round(Math.random() * deck.length) - 1;
     renderCard();
 }
@@ -230,14 +236,13 @@ document.addEventListener('keydown', (e) => {
 // Stages of learning:
 // [x] row-based godan verbs
 // [ ] add ichidan verbs
-// [ ] add non-row-based forms
-// [ ] add compound forms (like passive-causative)
+// [ ] add non-row-based forms (past, negative, past negative)
+// [ ] add compound forms (causative-passive, tara conditional, desire)
 
 fetch("/deck.json")
   .then(resp => resp.json())
   .then(data => { 
     deck = data; 
-
     nextCard();
   });
 </script>

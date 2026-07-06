@@ -214,7 +214,8 @@ function nextCard() {
     if (selected.length === 0) {
       cardEl.classList.remove('question-bg');
       cardEl.classList.remove('answer-bg');
-      promptEl.textContent = 'All done';
+      promptEl.textContent = 'All done!';
+      targetEl.textContent = 'All done!';
       return;
     }
 

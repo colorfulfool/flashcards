@@ -95,6 +95,7 @@
         button:active { opacity: 0.6; }
         #wrong-btn svg { stroke: var(--failure); }
         #right-btn svg { stroke: var(--success); }
+        .track-learning { display: flex; gap: 4px; }
         .hidden { display: none !important; }
     </style>
 </head>
@@ -138,7 +139,9 @@
 </div>
 
 <div>
-  <label><input type="checkbox" name="track-learning" /> Track learning</label>
+  <label class="track-learning">
+    <input type="checkbox" name="track-learning" /> Track learning
+  </label>
 </div>
 
 <script>

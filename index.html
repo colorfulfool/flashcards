@@ -6,15 +6,22 @@
     <title>Godan Conjugation Matrix Drill</title>
     <style>
         :root {
+            --bg: #fffeff;
+            --card-bg: #f0f3f8;
+            --answer-bg: #cae5fc;
+            --text: #1f1f1f;
+            --text-muted: #a9a9aa;
+            --success: #377e22;
+            --success-bg: #377e2225;
+            --failure: #ea3323;
+            --failure-bg: #ea332325;
+        }
+        @media (prefers-color-scheme: dark) {
             --bg: #131314;
             --card-bg: #1e1f20;
+            --answer-bg: #1d4974;
             --text: #f8fafc;
             --text-muted: #626262;
-            --accent: #38bdf8;
-            --border: #334155;
-            --success: #377e22;
-            --failure: #ea3323;
-            --answer-bg: #1d4974;
         }
         body {
             font-family: system-ui, -apple-system, sans-serif;
@@ -46,7 +53,7 @@
             color: var(--text-muted);
         }
         .correct {
-          background-color: color-mix(in oklab, var(--success), var(--bg) 40%);
+          background-color: var(--success-bg);
           padding: 4px 8px;
           border-radius: 12px;
           display: flex;
@@ -93,8 +100,8 @@
             transition: all 0.2s;
         }
         button:active { opacity: 0.6; }
-        #wrong-btn svg { stroke: var(--failure); }
-        #right-btn svg { stroke: var(--success); }
+        #wrong-btn { background-color: var(--failure-bg); stroke: var(--failure); }
+        #right-btn { background-color: var(--success-bg); stroke: var(--success); }
         .track-learning { display: flex; gap: 4px; }
         .hidden { display: none !important; }
     </style>

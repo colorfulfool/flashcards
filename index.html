@@ -71,6 +71,7 @@
             flex-direction: column;
             justify-content: center;
             cursor: pointer;
+            view-transition-name: card;
         }
         .question-bg {
           background-color: var(--card-bg);
@@ -107,6 +108,7 @@
         .decks-select-container {
           display: flex;
           gap: 8px;
+          view-transition-name: decks-select-container;
         }
         #decks-btn {
             font-size: 0.9rem;
@@ -280,12 +282,16 @@ cardEl.addEventListener('click', () => {
 trackLearningCheck.addEventListener('change', (event) => {
   if (event.target.checked) {
     trackingLearning = true;
-    controlsEl.classList.remove('hidden'); 
-    document.querySelector(".correct").classList.remove('hidden'); 
+    document.startViewTransition(() => { 
+      controlsEl.classList.remove('hidden'); 
+      document.querySelector(".correct").classList.remove('hidden'); 
+    });
   } else {
     trackingLearning = false;
-    controlsEl.classList.add('hidden'); 
-    document.querySelector(".correct").classList.add('hidden'); 
+    document.startViewTransition(() => { 
+      controlsEl.classList.add('hidden'); 
+      document.querySelector(".correct").classList.add('hidden'); 
+    });
   }
 });
 

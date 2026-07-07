@@ -239,7 +239,36 @@
       {"type":"coercion","prompt":"教える (おしえる) → Past","target":"教えた (おしえた)"},
       {"type":"coercion","prompt":"教える (おしえる) → Past Negative","target":"教えなかった (おしえなかった)"},
       {"type":"coercion","prompt":"始める (はじめる) → Past","target":"始めた (はじめた)"},
-      {"type":"coercion","prompt":"始める (はじめる) → Past Negative","target":"始めなかった (はじめなかった)"}
+      {"type":"coercion","prompt":"始める (はじめる) → Past Negative","target":"始めなかった (はじめなかった)"},
+
+      {"type":"coercion","prompt":"大きい (おおきい) → Negative","target":"大きくない (おおきくない)"},
+      {"type":"coercion","prompt":"大きい (おおきい) → Past","target":"大きかった (おおきかった)"},
+      {"type":"coercion","prompt":"大きい (おおきい) → Past Negative","target":"大きくなかった (おおきくなかった)"},
+      {"type":"coercion","prompt":"小さい (ちいさい) → Negative","target":"小さくない (ちいさくない)"},
+      {"type":"coercion","prompt":"小さい (ちいさい) → Past","target":"小さかった (ちいさかった)"},
+      {"type":"coercion","prompt":"小さい (ちいさい) → Past Negative","target":"小さくなかった (ちいさくなかった)"},
+      {"type":"coercion","prompt":"新しい (あたらしい) → Negative","target":"新しくない (あたらしくない)"},
+      {"type":"coercion","prompt":"新しい (あたらしい) → Past","target":"新しかった (あたらしかった)"},
+      {"type":"coercion","prompt":"新しい (あたらしい) → Past Negative","target":"新しくなかった (あたらしくなかった)"},
+      {"type":"coercion","prompt":"楽しい (たのしい) → Negative","target":"楽しくない (たのしくない)"},
+      {"type":"coercion","prompt":"楽しい (たのしい) → Past","target":"楽しかった (たのしかった)"},
+      {"type":"coercion","prompt":"楽しい (たのしい) → Past Negative","target":"楽しくなかった (たのしくなかった)"},
+      {"type":"coercion","prompt":"難しい (むずかしい) → Negative","target":"難しくない (むずかしくない)"},
+      {"type":"coercion","prompt":"難しい (むずかしい) → Past","target":"難しかった (むずかしかった)"},
+      {"type":"coercion","prompt":"難しい (むずかしい) → Past Negative","target":"難しくなかった (むずかしくなかった)"},
+
+      {"type":"coercion","prompt":"静か (しずか) → Negative","target":"静かじゃない (しずかじゃない)"},
+      {"type":"coercion","prompt":"静か (しずか) → Past","target":"静かだった (しずかだった)"},
+      {"type":"coercion","prompt":"静か (しずか) → Past Negative","target":"静かじゃなかった (しずかじゃなかった)"},
+      {"type":"coercion","prompt":"簡単 (かんたん) → Negative","target":"簡単じゃない (かんたんじゃない)"},
+      {"type":"coercion","prompt":"簡単 (かんたん) → Past","target":"簡単だった (かんたんだった)"},
+      {"type":"coercion","prompt":"簡単 (かんたん) → Past Negative","target":"簡単じゃなかった (かんたんじゃなかった)"},
+      {"type":"coercion","prompt":"有名 (ゆうめい) → Negative","target":"有名じゃない (ゆうめいじゃない)"},
+      {"type":"coercion","prompt":"有名 (ゆうめい) → Past","target":"有名だった (ゆうめいだった)"},
+      {"type":"coercion","prompt":"有名 (ゆうめい) → Past Negative","target":"有名じゃなかった (ゆうめいじゃなかった)"},
+      {"type":"coercion","prompt":"元気 (げんき) → Negative","target":"元気じゃない (げんきじゃない)"},
+      {"type":"coercion","prompt":"元気 (げんき) → Past","target":"元気だった (げんきだった)"},
+      {"type":"coercion","prompt":"元気 (げんき) → Past Negative","target":"元気じゃなかった (げんきじゃなかった)"}
     ]
   }
 ]

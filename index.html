@@ -231,6 +231,7 @@ function renderCard(item) {
     
     promptEl.classList.remove('hidden');
     answerBlockEl.classList.add('hidden');
+    cardEl.classList.add('question-bg');
     cardEl.classList.remove('answer-bg');
     showingAnswer = false;
 }
@@ -238,6 +239,7 @@ function renderCard(item) {
 function showAnswer() {
     promptEl.classList.add('hidden');
     answerBlockEl.classList.remove('hidden');
+    cardEl.classList.remove('question-bg');
     cardEl.classList.add('answer-bg');
     showingAnswer = true;
 }

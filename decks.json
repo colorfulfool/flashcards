@@ -120,7 +120,19 @@
       {"type":"recognition","prompt":"持つ (もつ)","target":"持つ (もつ) [U-Row / Dictionary Form]"},
       {"type":"recognition","prompt":"持て (もて)","target":"持つ (もつ) [E-Row / Imperative Form]"},
       {"type":"recognition","prompt":"持てば (もてば)","target":"持つ (もつ) [E-Row / Conditional Suffix]"},
-      {"type":"recognition","prompt":"持たない (もたない)","target":"持つ (もつ) [A-Row / Negative Suffix]"}
+      {"type":"recognition","prompt":"持たない (もたない)","target":"持つ (もつ) [A-Row / Negative Suffix]"},
+
+      {"type":"coercion","prompt":"なる (なる) → Negative","target":"ならない (ならない)"},
+      {"type":"coercion","prompt":"なる (なる) → Passive","target":"なられる (なられる)"},
+      {"type":"recognition","prompt":"なられる (なられる)","target":"なる (なる) [A-Row / Passive Suffix]"},
+      {"type":"coercion","prompt":"なる (なる) → Polite","target":"なります (なります)"},
+      {"type":"coercion","prompt":"なる (なる) → Potential","target":"なれる (なれる)"},
+      {"type":"coercion","prompt":"なる (なる) → Volitional","target":"なろう (なろう)"},
+      {"type":"recognition","prompt":"ならせる (ならせる)","target":"なる (なる) [A-Row / Causative Suffix]"},
+      {"type":"recognition","prompt":"なる (なる)","target":"なる (なる) [U-Row / Dictionary Form]"},
+      {"type":"recognition","prompt":"なれ (なれ)","target":"なる (なる) [E-Row / Imperative Form]"},
+      {"type":"recognition","prompt":"なれば (なれば)","target":"なる (なる) [E-Row / Conditional Suffix]"},
+      {"type":"recognition","prompt":"ならない (ならない)","target":"なる (なる) [A-Row / Negative Suffix]"}
     ]
   },
   {
@@ -203,6 +215,34 @@
       {"type":"recognition","prompt":"始めれば (はじめれば)","target":"始める (はじめる) [Conditional Suffix]"},
       {"type":"recognition","prompt":"始めない (はじめない)","target":"始める (はじめる) [A-Row / Negative Suffix]"},
       {"type":"recognition","prompt":"始められる (はじめられる)","target":"始める (はじめる) [A-Row / Passive-Potential Suffix]"}
+    ]
+  },
+  {
+    "name": "irregular verbs",
+    "cards": [
+      {"type":"coercion","prompt":"する → Negative","target":"しない"},
+      {"type":"coercion","prompt":"する → Passive","target":"される"},
+      {"type":"recognition","prompt":"される","target":"する [Passive Suffix]"},
+      {"type":"coercion","prompt":"する → Polite","target":"します"},
+      {"type":"coercion","prompt":"する → Potential","target":"できる"},
+      {"type":"coercion","prompt":"する → Volitional","target":"しよう"},
+      {"type":"recognition","prompt":"させる","target":"する [Causative Suffix]"},
+      {"type":"recognition","prompt":"する","target":"する [Dictionary Form]"},
+      {"type":"recognition","prompt":"しろ","target":"する [Imperative Form]"},
+      {"type":"recognition","prompt":"すれば","target":"する [Conditional Suffix]"},
+      {"type":"recognition","prompt":"しない","target":"する [Negative Suffix]"},
+
+      {"type":"coercion","prompt":"来る (くる) → Negative","target":"来ない (こない)"},
+      {"type":"coercion","prompt":"来る (くる) → Passive","target":"来られる (こられる)"},
+      {"type":"recognition","prompt":"来られる (こられる)","target":"来る (くる) [Passive Suffix]"},
+      {"type":"coercion","prompt":"来る (くる) → Polite","target":"来ます (きます)"},
+      {"type":"coercion","prompt":"来る (くる) → Potential","target":"来られる (こられる)"},
+      {"type":"coercion","prompt":"来る (くる) → Volitional","target":"来よう (こよう)"},
+      {"type":"recognition","prompt":"来させる (こさせる)","target":"来る (くる) [Causative Suffix]"},
+      {"type":"recognition","prompt":"来る (くる)","target":"来る (くる) [Dictionary Form]"},
+      {"type":"recognition","prompt":"来い (こい)","target":"来る (くる) [Imperative Form]"},
+      {"type":"recognition","prompt":"来れば (くれば)","target":"来る (くる) [Conditional Suffix]"},
+      {"type":"recognition","prompt":"来ない (こない)","target":"来る (くる) [Negative Suffix]"}
     ]
   },
   {
@@ -320,7 +360,7 @@
       {"type":"recognition","prompt":"好きなら (すきなら)","target":"好き (すき) [Conditional]"},
 
       {"type":"coercion","prompt":"下手 (へた) → Conditional","target":"下手なら (へたなら)"},
-      {"type":"recognition","prompt":"下手なら (へたなら)","target":"下手 (へた) [Conditional]"},
+      {"type":"recognition","prompt":"下手なら (へたなら)","target":"下手 (へた) [Conditional]"}
     ]
   }
 ]

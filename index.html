@@ -6,23 +6,23 @@
     <title>Conjugation Drill</title>
     <style>
         :root {
-            --bg: #fffeff;
-            --card-bg: #f0f3f8;
-            --answer-bg: #cae5fc;
-            --text: #1f1f1f;
-            --text-muted: #a9a9aa;
-            --success: #377e22;
-            --success-bg: #377e2225;
-            --failure: #ea3323;
-            --failure-bg: #ea332325;
+            --bg: hsl(300, 100%, 100%);
+            --card-bg: hsl(218, 36%, 96%);
+            --answer-bg: hsl(208, 89%, 89%);
+            --text: hsl(0, 0%, 12%);
+            --text-muted: hsl(240, 1%, 66%);
+            --success: hsl(106, 58%, 53%);
+            --success-bg: hsla(106, 58%, 53%, 0.15);
+            --failure: hsl(5, 83%, 53%);
+            --failure-bg: hsla(5, 83%, 53%, 0.15);
         }
         @media (prefers-color-scheme: dark) {
           :root {
-              --bg: #131314;
-              --card-bg: #1e1f20;
-              --answer-bg: #1d4974;
-              --text: #f8fafc;
-              --text-muted: #626262;
+              --bg: hsl(240, 3%, 8%);
+              --card-bg: hsl(210, 3%, 12%);
+              --answer-bg: hsl(210, 60%, 28%);
+              --text: hsl(210, 40%, 98%);
+              --text-muted: hsl(0, 0%, 38%);
           }
         }
         body {
@@ -137,7 +137,7 @@
           gap: 8px;
         }
         #decks-modal::backdrop {
-          background-color: #00000090;
+          background-color: hsla(0, 0%, 0%, 0.56);
         }
         #decks-count {
           color: var(--text-muted);

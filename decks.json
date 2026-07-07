@@ -480,20 +480,7 @@
       {"type":"recognition","prompt":"下手になれる (へたになれる)","target":"下手 (へた) [Potential]"},
       {"type":"recognition","prompt":"下手なら (へたなら)","target":"下手 (へた) [Conditional]"},
       {"type":"recognition","prompt":"下手にしろ (へたにしろ)","target":"下手 (へた) [Imperative]"},
-      {"type":"recognition","prompt":"下手であろう (へたであろう)","target":"下手 (へた) [Volitional]"},
-
-      {"type":"coercion","prompt":"上手 (じょうず) → Passive","target":"上手にされる (じょうずにされる)"},
-      {"type":"coercion","prompt":"上手 (じょうず) → Causative","target":"上手にする (じょうずにする)"},
-      {"type":"coercion","prompt":"上手 (じょうず) → Potential","target":"上手になれる (じょうずになれる)"},
-      {"type":"coercion","prompt":"上手 (じょうず) → Conditional","target":"上手なら (じょうずなら)"},
-      {"type":"coercion","prompt":"上手 (じょうず) → Imperative","target":"上手にしろ (じょうずにしろ)"},
-      {"type":"coercion","prompt":"上手 (じょうず) → Volitional","target":"上手であろう (じょうずであろう)"},
-      {"type":"recognition","prompt":"上手にされる (じょうずにされる)","target":"上手 (じょうず) [Passive]"},
-      {"type":"recognition","prompt":"上手にする (じょうずにする)","target":"上手 (じょうず) [Causative]"},
-      {"type":"recognition","prompt":"上手になれる (じょうずになれる)","target":"上手 (じょうず) [Potential]"},
-      {"type":"recognition","prompt":"上手なら (じょうずなら)","target":"上手 (じょうず) [Conditional]"},
-      {"type":"recognition","prompt":"上手にしろ (じょうずにしろ)","target":"上手 (じょうず) [Imperative]"},
-      {"type":"recognition","prompt":"上手であろう (じょうずであろう)","target":"上手 (じょうず) [Volitional]"}
+      {"type":"recognition","prompt":"下手であろう (へたであろう)","target":"下手 (へた) [Volitional]"}
     ]
   }
 ]
